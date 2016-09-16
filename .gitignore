@@ -1,0 +1,6 @@
+*.png
+*.json
+output/*
+!output/index.html
+cookies.txt
+__pycache__

@@ -1,0 +1,4 @@
+Ghost.py
+requests
+jinja2
+bs4

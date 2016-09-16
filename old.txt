@@ -1,0 +1,83 @@
+
+page, resources = ghost.wait_for_selector('a[href^=\"#/genex\"]')
+
+page, resources = ghost.evaluate("document.querySelector('a[href^=\"#/genex\"]').click();", expect_loading=True)
+print(ghost.content)
+sys.exit(0)
+
+ghost.capture_to('site.png')#, selector="header")
+
+SELECTOR_NAV = '.nav.side-nav  #menu li a'
+
+result, resources = ghost.evaluate("Array.prototype.map.call(document.querySelectorAll('{}'), function(link) {return {title: link.innerHTML, link: link.href}; });".format(SELECTOR_NAV))
+
+# Auf Unterseiten
+# document.querySelectorAll('#page-wrapper a[href^="/genex/"]')
+
+https://nabla.algo.informatik.tu-darmstadt.de/genex/exerciselist/tree
+
+jQuery('#page-wrapper a[href^="/genex/"][href$="8"]').click();
+
+try {jQuery('button#prepareBtn').click();} catch(e) {}
+setTimeout(function() {jQuery('button[type="submit"]').click() }, 200);
+
+
+
+jQuery('.panel').find('button').remove().end().map(function() { return { text: jQuery(this).text(), img: jQuery(this).find('object').attr('data')}});
+
+function highlightNodes() {
+    var trees = document.querySelectorAll('.b-tree');
+    Array.prototype.forEach.call(trees, function(tree) {
+        var highlighted_nodes = tree.getAttribute('data-highlighted-nodes');
+        var svg = tree.getSVGDocument();
+        if (!highlighted_nodes) return;
+        try {
+            highlighted_nodes = JSON.parse(highlighted_nodes.replace(/'/g, '"'));
+            highlighted_nodes.forEach(function(node, index) {
+                var titles = svg.querySelectorAll('title');
+                Array.prototype.forEach.call(titles, function(title) {
+                    if (title.innerHTML.trim() == node) {
+                        var pol = title.parentNode.querySelector('polygon');
+                        if (!pol) return;
+
+                        pol.style.stroke = index === 0 ? 'lime' : 'red';
+                        pol.style['stroke-weight'] = 100;
+                    }
+                });
+            });
+        } catch (e) {
+            console.log("error highlighting nodes", e);
+        }
+    });
+}
+
+<script type="text/javascript">
+    (function() {
+        toggleSolutionPanels(false);
+        addListener();
+
+        function iterateOverElements(selector, fn) {
+            Array.prototype.forEach.call(document.querySelectorAll(selector), fn);
+        }
+
+        var currentlyEnabled;
+        function toggleSolutionPanels(enabled) {
+            if(enabled === undefined) {
+                enabled = !currentlyEnabled;
+            }
+
+            currentlyEnabled = enabled;
+            iterateOverElements('.panel', function(panel) {
+                if (panel.querySelector('h2').innerHTML.indexOf('Aufgabe') === -1) {
+                    panel.style.visibility = enabled ? '' : 'hidden';
+                }
+            });
+        }
+
+        function addListener() {
+            document.querySelector('button.btn-toggle-solution').onclick = function() {
+                toggleSolutionPanels();
+            };
+        }
+    })();
+    </script>
