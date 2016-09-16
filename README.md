@@ -13,9 +13,8 @@ cp cookies-example.txt cookies.txt
 python3 crawler.py
 python3 update_output.py
 # the 'output' folder will hold the data now
-cd output
 # start webserver (npm install -g http-server)
-http-server -o
+http-server output -o
 # Enjoy
 ```
 
