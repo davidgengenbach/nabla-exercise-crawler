@@ -11,7 +11,13 @@ cp cookies-example.txt cookies.txt
 # 5) Copy all cookies from there (just mark them and copy)
 # 6) Paste them in cookies.txt
 python3 crawler.py
+python3 update_output.py
+# the 'output' folder will hold the data now
+cd output
+# start webserver (npm install -g http-server)
+http-server -o
+# Enjoy
 ```
 
-Currently you can only crawl B-Tree: Remove, but it should be easily extendable!
+Currently you can only crawl _B-Tree: Remove_, but it should be easily extendable.
 The code is a mess, so feel free to make merge requests with improvements.
