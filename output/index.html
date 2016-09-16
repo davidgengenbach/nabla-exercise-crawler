@@ -23,12 +23,14 @@
         font-family: Verdana;
         font-size: 14px;
         color: #333;
+        overflow: hidden;
     }
 
     aside {
         width: 5%;
         float: left;
         height: 100%;
+        overflow: scroll;
     }
 
     aside a {
@@ -81,7 +83,7 @@
                                 showExercise(ex);
                             })
                             .attr('data-ex', ex)
-                            .text('E' + (index + 1))
+                            .text((index + 1))
                             .appendTo('aside');
                     });
 

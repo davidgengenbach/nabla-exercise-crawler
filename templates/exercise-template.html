@@ -47,16 +47,18 @@
 
 <body>
 
-    {% for r in data %}
-    {% if loop.index0 == 1 %}
-    <p>Scroll down for the solution</p>
-    <div class="seperator"></div>
-    {% endif %}
-    <div class="panel">
-        <h2>{{r['title']}}</h2>
-        <p>{{r['text']}}</p>
-        <object data-highlighted-nodes="{{r['highlighted_nodes']}}" class="b-tree" type="image/svg+xml" data="images/{{r['img_local']}}"></object>
-    </div>
+    {% for section in data %}
+
+        {% set old_section = section %}
+        {% if loop.index0 == 1 %}
+            <p>Scroll down for the solution</p>
+            <div class="seperator"></div>
+            {% set section = data[0] %}
+            {% include 'panel.html' %}
+        {% endif %}
+
+        {% set section = old_section %}
+        {% include 'panel.html' %}
     {% endfor %}
 </body>
 

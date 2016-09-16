@@ -13,7 +13,7 @@ DOMAIN = 'nabla.algo.informatik.tu-darmstadt.de'
 BASE_URL = 'https://{}'.format(DOMAIN)
 EXERCISE_URL = '{}/genex/exercise/8'.format(BASE_URL)
 
-template = helper.get_template('exercise-template.html')
+template = helper.get_template('templates', 'exercise-template.html')
 
 def sanitize(s):
     return s.replace('\n', ' ').replace('\t', '').strip()

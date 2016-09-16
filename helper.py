@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
-from jinja2 import Template
+from jinja2 import FileSystemLoader
+from jinja2.environment import Environment
 import http.cookiejar
 
 def get_cookies(filename = 'cookies.txt'):
@@ -26,9 +27,10 @@ def get_cookies(filename = 'cookies.txt'):
         jar.set_cookie(c)
     return jar
 
-def get_template(file):
-    with open(file, 'r') as f:
-        return Template(f.read())
+def get_template(env_f, file):
+    env = Environment(trim_blocks=True, lstrip_blocks=True)
+    env.loader = FileSystemLoader(env_f)
+    return env.get_template(file)
 
 def highlight_nodes(svg_image, highlighted_nodes):
     soup = BeautifulSoup(svg_image, 'html.parser')
