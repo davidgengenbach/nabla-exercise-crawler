@@ -1,8 +1,10 @@
+import shutil
 from bs4 import BeautifulSoup
 import re
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 import http.cookiejar
+import os
 
 def get_cookies(filename = 'cookies.txt'):
     jar = http.cookiejar.CookieJar()
@@ -41,3 +43,9 @@ def highlight_nodes(svg_image, highlighted_nodes):
                 colors = ['lime', 'blue']
                 pol.attrs['style']  = "stroke: {}; stroke-width: {}".format(colors[index % 2], 3)
     return str(soup)
+
+def get_folders_in_dir(directory):
+    return ([os.path.join(directory,o).replace(directory + '/', '') for o in os.listdir(directory) if os.path.isdir(os.path.join(directory,o))])
+
+def remove_folder(folder):
+    return shutil.rmtree(folder)

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>B-Tree: remove</title>
+    <title>{{title}}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -42,13 +42,43 @@
     .seperator {
         height: 90%;
     }
+
+    .table {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+    .table > thead > tr > th,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > th,
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding: 8px;
+      line-height: 1.42857143;
+      vertical-align: top;
+      border-top: 1px solid #ddd;
+    }
+    .table > thead > tr > th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .table > tbody + tbody {
+      border-top: 2px solid #ddd;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #ddd !important
+    }
     </style>
+
+
 </head>
 
 <body>
-
     {% for section in data %}
-
         {% set old_section = section %}
         {% if loop.index0 == 1 %}
             <p>Scroll down for the solution</p>
@@ -60,6 +90,33 @@
         {% set section = old_section %}
         {% include 'panel.html' %}
     {% endfor %}
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        CommonHTML : {
+            styles : {
+                ".MJXc-math" : {
+                "font-size" : "1.3em"
+                }
+            }
+        },
+        extensions: ["tex2jax.js", "TeX/color.js"],
+        jax: ["input/TeX", "output/CommonHTML"],
+        tex2jax: {
+          inlineMath: [ ['$#','#$'] ],
+          displayMath: [ ['$$','$$'] ],
+          processEscapes: true
+        },
+        "HTML-CSS": {
+            availableFonts: ["TeX"],
+            scale: 140
+        },
+        SVG : {
+            scale:140
+        }
+      });
+    </script>
+    <script type="text/javascript" async defer src="//cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 </body>
 
 </html>
