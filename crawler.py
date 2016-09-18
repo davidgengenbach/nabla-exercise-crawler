@@ -7,7 +7,7 @@ import re
 import hashlib
 import helper
 import sys
-from exercise_ids import get_exercise_id_from_name
+from exercise_ids import get_exercise_config_from_name
 
 # This is a mess :(
 
@@ -21,9 +21,9 @@ def main():
 
     if len(sys.argv) == 2:
         exercise_name = sys.argv[1]
-    current_exercise = get_exercise_id_from_name(exercise_name)
+    current_exercise = get_exercise_config_from_name(exercise_name)
 
-    ex_id, data = get_exercise_data(BASE_URL, current_exercise)
+    ex_id, data = get_exercise_data(BASE_URL, current_exercise['id'], current_exercise['fill_in'])
     save_exercise_data(ex_id, data)
 
 def get_exercise_url(base_url, exercise_id):
@@ -60,7 +60,8 @@ def sanitize_html(html):
 ghost = Ghost()
 session = ghost.start(exclude="\.(css)$")
 session.load_cookies(helper.get_cookies())
-def get_exercise_data(base_url, exercise_url_id):
+def get_exercise_data(base_url, exercise_url_id, fill_value_in_inputs = '1'):
+    print(exercise_url_id)
     exercise_url = get_exercise_url(base_url, exercise_url_id)
     session.evaluate('window.WebSockets=undefined')
     session.evaluate('window.localStorage=undefined')
@@ -72,12 +73,18 @@ def get_exercise_data(base_url, exercise_url_id):
     page, extra_resources = session.open(exercise_url)
 
     exercise_id = page.url.replace(exercise_url + '/', '').encode('utf-8')
+
+    print("\n" * 4)
+    print("Exercise ID: {}".format(exercise_id))
+    print("\n" * 4)
+
     exercise_id = hashlib.sha224(exercise_id).hexdigest()
 
-    SCRIPT_FILL_TABLE_ENTRIES = '''
-        jQuery('#exerciseform td input').val('1');
-    '''
-    session.evaluate(SCRIPT_FILL_TABLE_ENTRIES)
+    if fill_value_in_inputs is not None:
+        SCRIPT_FILL_TABLE_ENTRIES = '''
+            jQuery('#exerciseform td input').val('1');
+        '''
+        session.evaluate(SCRIPT_FILL_TABLE_ENTRIES)
 
 
     SCRIPT_SUBMIT_EXERCISE = """
